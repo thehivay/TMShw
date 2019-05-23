@@ -1,3 +1,6 @@
+''' Даны три столбца: Name, PRlink, Note. Cделать с 7 по 22 листа на каждом список имен группы.'''
+
+
 import xlsxwriter
 
 workbook = xlsxwriter.Workbook('hw7_sheet.xlsx')

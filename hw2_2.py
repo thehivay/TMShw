@@ -2,6 +2,7 @@ def task_2(st):
     x = len(st)
     y = x//2
     result = st[y:x]+st[:y]
+    result = st[y:x]+st[0:y]
     return result
 
 

@@ -27,6 +27,7 @@ def task_1(db1):
 
 # task9_2
 
+
 def task_2(db1):
     conn = sqlite3.connect(db1)
     curs = conn.cursor()
@@ -51,6 +52,7 @@ def task_2(db1):
     pass
 
 # task9_3
+
 
 def task_3(db1):
     t = []
@@ -80,27 +82,17 @@ def task_3(db1):
                  "AND Items.description NOT NULL")
     t.append(curs.fetchall())
 
-    def select_krome(cursor, table_name, krome_list):
-        cursor.execute(f"pragma table_info({table_name})")
-        sel = ''
-        for n in cursor.fetchall():
-            if n[1] not in krome_list:
-                sel = sel + table_name + '.' + n[1] + ', '
-        sel = sel[:-2]
-        return sel
-
-    curs_d = conn.cursor()
-    for i in curs.execute(f"SELECT {select_krome(curs, 'Items', [''])} FROM Items"):
-        print(i)
-
-        curs_d.execute(f"SELECT {select_krome(curs_d, 'Departments', ['id'])} FROM Departments, Items " 
-                       f"WHERE Items.department = Departments.id AND Items.id = {i[0]} ")
-        for m in curs_d.fetchone():
-            naz = curs_d.description
-            print(naz[1][0])
-            print(f'Department_{{{m}}}')
-                
-    conn.commit()
+    # f
+    curs.execute("SELECT Items.name, Items.description, Items.price, "
+                 "'department_{sphere}' || Departments.sphere, "
+                 "'department_{staff_amount}' || Departments.staff_amount, "
+                 "'shop_{name}' || Shops.name, "
+                 "'shop_{address}' || Shops.address, "
+                 "'shop_{staff_amount}' || Shops.staff_amount "
+                 "FROM Items JOIN Departments "
+                 "ON Items.department = Departments.id "
+                 "JOIN Shops ON Departments.shop = Shops.id")
+    t.append(curs.fetchall())
 
     return tuple(t)
 
@@ -109,3 +101,5 @@ p = 'base.db'
 task_1(p)
 task_2(p)
 print('--------------', '\n', task_3(p))
+task_4(p)
+task_5(p)
